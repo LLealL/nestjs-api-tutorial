@@ -9,7 +9,7 @@
     "prisma:dev:deploy": "prisma migrate deploy",
     "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "db:dev:up": "docker compose up dev-db -d",
-    "db:dev:restart" : "yarn db:dev:rm && yarn db:dev:up && TIMEOUT 10 && yarn prisma:dev:deploy",
+    "db:dev:restart": "yarn db:dev:rm && yarn db:dev:up && TIMEOUT 10 && yarn prisma:dev:deploy",
     "prisma:test:deploy": "dotenv -e .env.test -- prisma migrate deploy",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^3.15.2",
