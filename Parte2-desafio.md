@@ -15,6 +15,20 @@
 * Fazer uma pagina web utilizando-se de vue.js com typescript e a parte de css usando Tailwind.css - aqui sem problemas usar um pronto: 
 	* https://freefrontend.com/tailwind-chats/
 	* https://codepen.io/cruip/pen/GRMKMOv
+	
 
-	O front deverá ter uma tela de login, usar a sua API para logar e depois fazer o chat com a api da Open AI e devolver a lista de nomes 
+## Critérios de aceite: 
+* O front deverá ter uma tela de login, usar a sua API para logar e depois fazer o chat com a api da Open AI e devolver a lista de nomes 
+
+* E perguntar para a pessoa se ela aprova a lista:
+		* se sim? Gravar no banco, o login da pessoa e os nomes que vieram para ela
+		* se não? Gravar em uma tabela diferente o login da pessoa e os nomes que vieram errados
+* Devo ser capaz de rodar o projeto na minha maquina (Heucles)
+* Criar um login para mim
+* Acessar a parte web por no endereço http://localhost:8080
+
+### Extra: 
+
+* Escrever testes unitários
+* Configurar eslint
  
