@@ -2,6 +2,7 @@
 
 ## Utilizando a API que fez:
 * **Pré Requisitos**
+	* Fazer esse curso: https://learn.deeplearning.ai/?_gl=1*vquwnv*_ga*MTUwODQzOTc5MC4xNjgzNjQzMzYx*_ga_PZF1GBS1R1*MTY4ODEzOTYxMy41LjAuMTY4ODEzOTYxNC41OS4wLjA. 	
 	* Criar uma conta na OpenAI https://openai.com/product
 	* Utilizar-se das bibliotecas da https://js.langchain.com/
 
