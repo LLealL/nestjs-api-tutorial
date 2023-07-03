@@ -5,10 +5,11 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { aiModule } from './ai/ai.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-  }) ,AuthModule,UserModule, BookmarkModule, PrismaModule],
+  }) ,AuthModule,UserModule, BookmarkModule, PrismaModule, aiModule],
 })
 export class AppModule {}
