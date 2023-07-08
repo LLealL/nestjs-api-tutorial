@@ -23,6 +23,8 @@ model User {
 
   bookmarks Bookmark[]
   chatContext Context[]
+  suggestion Suggestion[]
+  ignored Ignored[]
 
   @@map("users")
 }
@@ -53,4 +55,28 @@ model Context {
   user User @relation(fields: [userId], references: [id])
 
   @@map("contexts")
+}
+
+model Suggestion {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  names String[]
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("suggestions")
+}
+
+model Ignored {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  names String[]
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("ignoreds")
 }

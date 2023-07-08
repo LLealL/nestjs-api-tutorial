@@ -6,13 +6,16 @@ import { OpenAI } from 'langchain';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { BufferMemory, ConversationSummaryMemory } from "langchain/memory";
 import { response } from 'express';
+import { User } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 
 @Injectable()
 export class AiService {
 
 
-    constructor(private config: ConfigService){
+    constructor(private config: ConfigService,
+                private prisma: PrismaService,){
 
     }
 
@@ -51,6 +54,40 @@ export class AiService {
             reply: response,
             history: hist,
         };
+    }
+
+    async getNamesSuggestion(userId : number){
+        const contexts = await  this.prisma.context.findMany({
+            where:{
+                userId,
+            },
+        });
+        const llm = new OpenAI({modelName: "gpt-3.5-turbo", openAIApiKey: this.config.get('OPENAI_API_KEY'), temperature: 1 });
+        const memory = new ConversationSummaryMemory({
+            memoryKey: "chat_history",
+            llm
+          });
+          
+          var template = "Sugira 3 nomes para o futuro filho do usuário, utilizando das informações obtidas no diálogo abaixo: \n ''' \n Devolva  uma resposta no formato JSON com os nomes num campo chamado 'names' e uma mensagem resposta em um campo chamado 'message'";
+          contexts.forEach((context) =>{
+                template += "IA: "+ context.question +" \n ";
+                template += "Usuário: "+ context.answer +" \n ";
+            });
+          template += " \n ''' ";
+
+          console.log(template);
+          const prompt = new PromptTemplate({
+              template: template,
+              inputVariables: [""],
+          });
+
+          const chain = new LLMChain({ llm: llm, prompt: prompt });
+          const response = await chain.call({});
+          const retorno = JSON.parse(response.text);
+          console.log(retorno);
+
+          
+        return {retorno};
     }
 
 }

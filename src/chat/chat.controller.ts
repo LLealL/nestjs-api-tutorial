@@ -5,6 +5,7 @@ import { ChatNextOutputDto } from './dto/chatNextOutput.dto';
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { User } from '@prisma/client';
+import { ChatSuggestionDto } from './dto/chatSuggestion.dto';
 
 @UseGuards(JwtGuard)
 @Controller('chat')
@@ -22,5 +23,9 @@ export class ChatController {
         return this.chatService.createQuestionAnswer(userId,data);
     }
 
+    @Post('saveNames')
+    createSuggestions(@GetUser('id') userId:number, @Body() data: ChatSuggestionDto){
+        return this.chatService.createSuggestion(userId,data);
+    }
 
 }

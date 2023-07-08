@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { ChatNextOutputDto } from './dto/chatNextOutput.dto';
-import { ChatMessageDto } from './dto';
+import { ChatMessageDto, ChatSuggestionDto } from './dto';
 
 @Injectable()
 export class ChatService {
@@ -43,5 +43,29 @@ export class ChatService {
 
         return context;
     }
+
+    async createSuggestion(userId: number, dto: ChatSuggestionDto){
+        console.log(dto.names);
+        if(dto.liked){
+           delete dto.liked;
+           const completed = await this.prisma.suggestion.create({
+                data:{
+                    userId,
+                    ...dto,
+                },
+            });
+            return completed;
+        }else{
+            delete dto.liked;
+            const completed = await this.prisma.ignored.create({
+                data:{
+                    userId,
+                    ...dto,
+                },
+            });
+            return completed;
+        }
+    }
+
 
 }
