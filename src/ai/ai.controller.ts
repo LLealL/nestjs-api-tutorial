@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AiService } from './ai.service';
 import { AiRequest } from './dto';
+
 
 @Controller('ai')
 export class AiController {
@@ -9,6 +10,11 @@ export class AiController {
     @Get('/message')
     getModelAnswer(@Body() data: AiRequest){
         return this.aiService.getModelAnswer(data.question);
+    }
+
+    @Get('/chat')
+    getChatAnswer(@Body() data: AiRequest){
+        return this.aiService.getModelChat(data.question, data.chat_history);
     }
 
 }

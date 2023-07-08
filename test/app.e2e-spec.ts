@@ -6,6 +6,8 @@ import * as pactum from 'pactum';
 import { AuthDto } from '../src/auth/dto';
 import { EditUserDto } from 'src/user/dto';
 import { CreateBookmarkDto, EditBookmarkDto } from '../src/bookmark/dto';
+import { ChatNextOutputDto } from '../src/chat/dto/chatNextOutput.dto';
+import { ChatMessageDto } from '../src/chat/dto';
 
 describe('App e2e', () =>{
   let app: INestApplication;
@@ -204,4 +206,34 @@ describe('App e2e', () =>{
 
 
   });
+
+  describe('Chat', () =>{
+    const dto: ChatNextOutputDto = {
+      getNextQuestion: true,
+      currentIndex: -1,
+    }
+    describe('Get Question', ()=>{
+      it('Should Get First Question', () => {
+        return pactum.spec().get('/chat/nextOutput',
+        ).withHeaders({
+          Authorization: 'Bearer $S{userAt}',
+        }).withBody(dto).expectStatus(200).stores('nextQuestion','question');
+      })
+    });
+
+    describe('Create Context', ()=>{
+      const messageDto: ChatMessageDto = {
+        question: "$S{nextQuestion}",
+        answer: "Hi!",
+      }
+      it('Should create Context', ()=>{
+        return pactum.spec().post('/chat/questionAnswer',
+        ).withHeaders({
+          Authorization: 'Bearer $S{userAt}',
+        }).withBody(messageDto).expectStatus(201);
+      });
+    });
+
+  });
+
 });

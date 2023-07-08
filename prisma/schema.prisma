@@ -22,6 +22,7 @@ model User {
   lastName String?
 
   bookmarks Bookmark[]
+  chatContext Context[]
 
   @@map("users")
 }
@@ -39,4 +40,17 @@ model Bookmark {
   user User @relation(fields: [userId], references: [id])
 
   @@map("bookmarks")
+}
+
+model Context {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  question String
+  answer String
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("contexts")
 }
