@@ -1,28 +1,24 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AiService } from './ai.service';
-import { AiRequest } from './dto';
 import { GetUser } from '../auth/decorator';
 import { User } from '@prisma/client';
 import { JwtGuard } from '../auth/guard';
+import { AiMessagesDto } from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('ai')
 export class AiController {
     constructor(private aiService: AiService){};
 
-    @Get('/message')
-    getModelAnswer(@Body() data: AiRequest){
-        return this.aiService.getModelAnswer(data.question);
+    @Get('/questions')
+    getModelQuestions(){
+        return this.aiService.getModelQuestions();
     }
 
-    @Get('/chat')
-    getChatAnswer(@Body() data: AiRequest){
-        return this.aiService.getModelChat(data.question, data.chat_history);
-    }
 
-    @Get('/names')
-    getNamesSuggestion(@GetUser('id') userId: number){
-        return this.aiService.getNamesSuggestion(userId);
+    @Post('/names')
+    getNamesSuggestion(@GetUser('id') userId: number, @Body() data: AiMessagesDto){
+        return this.aiService.getNamesSuggestion(userId,data);
     }
 
 }
