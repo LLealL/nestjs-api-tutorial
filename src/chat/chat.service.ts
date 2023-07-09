@@ -67,5 +67,31 @@ export class ChatService {
         }
     }
 
+    async getSuggestions(userId: number,liked : boolean){
+        if(liked){
+           const suggestions = await this.prisma.suggestion.findMany({
+                where: {
+                    userId : userId,
+                }
+            });
+            var names = [];
+            suggestions.forEach((suggestion)=>{
+                names = [...names, ...suggestion.names];
+            }); 
+            return Array.from(new Set(names));
+        }else{
+            const ignored = await this.prisma.ignored.findMany({
+                where: {
+                    userId,
+                }
+            });
+            var names = [];
+            ignored.forEach((suggestion)=>{
+                names = [...names, ...suggestion.names];
+            }); 
+            return Array.from(new Set(names));
+        }
+    }
+
 
 }

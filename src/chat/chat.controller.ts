@@ -28,4 +28,13 @@ export class ChatController {
         return this.chatService.createSuggestion(userId,data);
     }
 
+    @Get('getSuggestions')
+    getSuggestions(@GetUser('id') userId:number){
+        return this.chatService.getSuggestions(userId,true);
+    }
+
+    @Get('getIgnoreds')
+    getIgnoreds(@GetUser('id') userId:number){
+        return this.chatService.getSuggestions(userId,false);
+    }
 }

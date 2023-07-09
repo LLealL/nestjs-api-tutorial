@@ -66,9 +66,9 @@ export class AiService {
                 template += "Usuário: "+ context.answer +" \n ";
             });*/
             dto.messages.forEach((message) =>{
-                template += message.sender + ": "+message.text + " / ";
+                template += message.sender + ": "+message.text + " \n ";
             });
-          template += " \n ''' \n Devolva  uma resposta no formato JSON com os nomes num campo chamado 'names' e uma mensagem resposta em um campo chamado 'message' ";
+          template += " \n ''' \n Caso já exista sugestões de nomes na conversa crie nomes diferentes \n Devolva uma resposta no formato JSON com os nomes num campo chamado 'names' e uma mensagem resposta em um campo chamado 'message' concatenando nela os respectivos nomes";
 
           console.log(template);
           const prompt = new PromptTemplate({
